@@ -115,7 +115,9 @@ function App() {
       <h1>Lock</h1>
       {status ? (
         <div className="card">
-          <p>Owner: {status.owner == address ? "(you)" : "(NOT you)"} {status.owner}</p>
+          <p>
+          {status.owner == address ? "You own this lock" : "The owner of this lock is: " + status.owner}
+          </p>
           {now > status.unlockTime ? <p>🔓 Unlocked</p> : <p>🔒 Locked: {status.unlockTime - now}s left</p>}
         </div>
       ) : <p>Info about the Lock is unavailable</p>}
