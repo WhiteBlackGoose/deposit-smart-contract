@@ -16,6 +16,7 @@
             pkgs.mkShell {
               nativeBuildInputs = with pkgs; [
                 solc
+                typescript-language-server
               ];
             };
         });

@@ -36,6 +36,17 @@ describe("Lock", function () {
   }
 
   describe("Deployment", function () {
+    it("TTtt", async function () {
+      const aa = await hre.viem.deployContract("Lock", [await time.latest() + 1000000], {
+        value: parseGwei("10"),
+      });
+      console.log(await aa.read.owner());
+      const [acc] = await hre.viem.getWalletClients();
+      await expect(async () => {
+        await aa.write.withdraw()
+      }).to.throw();
+    });
+
     it("Should set the right unlockTime", async function () {
       const { lock, unlockTime } = await loadFixture(deployOneYearLockFixture);
 
