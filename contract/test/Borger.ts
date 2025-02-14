@@ -109,8 +109,4 @@ describe("Borger", function () {
       
       expect(finalBalance).to.be.closeTo(expectedBalance, BigInt(ethers.parseEther("0.01")));
     });
-    
-    
-    
-
 });
