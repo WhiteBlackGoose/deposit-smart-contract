@@ -1,26 +1,34 @@
-import { Address, createPublicClient, getContract, http } from 'viem'
-import { hardhat } from 'viem/chains'
-import { abi } from './abi';
- 
-export const contractAddress = "0x8f86403A4DE0BB5791fa46B8e795C547942fE4Cf";
+import { createPublicClient, getContract, http } from "viem";
+import { hardhat } from "viem/chains";
+import { abi } from "./abi";
+
+export const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 export const publicClient = createPublicClient({
   chain: hardhat,
-  transport: http()
-})
-
+  transport: http(),
+});
+export enum ReturnedState {
+  Returned = 0,
+  Received = 1,
+}
 export interface Status {
-  unlockTime: bigint;
-  owner: Address;
+  returnState: ReturnedState | null;
 }
 
-export async function readStatus(contractAddress: `0x${string}`): Promise<Status> {
+export async function readStatus(
+  contractAddress: `0x${string}`,
+  userAdress: `0x${string}`
+): Promise<Status> {
   const contract = getContract({
     address: contractAddress,
     abi: abi,
     client: publicClient,
   });
-  const unlockTime = await contract.read.unlockTime();
-  const owner = await contract.read.owner();
-  return { unlockTime, owner };
+  const state = await contract.read.checkReturnState([userAdress]);
+
+  const returnState =
+    state === 0 ? ReturnedState.Returned : ReturnedState.Received;
+
+  return { returnState };
 }
