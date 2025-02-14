@@ -131,7 +131,6 @@ function App() {
         </button>
         <button
           onClick={async () => {
-            let error = false;
             try {
               await client?.writeContract({
                 account: address,
@@ -147,7 +146,6 @@ function App() {
               } else {
                 alert("Other error: " + e);
               }
-              error = true;
             }
             setStatus(await readStatus(contractAddress, address));
           }}
