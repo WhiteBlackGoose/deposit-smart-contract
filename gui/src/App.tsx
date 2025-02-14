@@ -87,8 +87,6 @@ function App() {
   //   return () => clearInterval(interval);
   // }, []);
 
-  const now = BigInt(Math.floor(new Date().getTime() / 1000));
-
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
@@ -146,12 +144,11 @@ function App() {
             } catch (e) {
               if (e instanceof ContractFunctionExecutionError) {
                 alert(`Failed to borrow item: ${e.message}`);
-                error = true;
+              } else {
+                alert("Other error: " + e);
               }
+              error = true;
             }
-            // if (!error) {
-            //   alert("Item borrowed successfully!");
-            // }
             setStatus(await readStatus(contractAddress, address));
           }}
           disabled={
@@ -178,7 +175,7 @@ function App() {
               if (e instanceof ContractFunctionExecutionError) {
                 alert(`Failed to return item: ${e.message}`);
               } else {
-                alert("error else" + e);
+                alert("Other error: " + e);
               }
             }
             if (!error) {
