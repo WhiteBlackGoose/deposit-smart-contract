@@ -79,14 +79,6 @@ function App() {
 
   const [status, setStatus] = useState<Status | null>(null);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     readStatus(contractAddress).then(setStatus);
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
@@ -120,15 +112,6 @@ function App() {
     state = (
       <div className="card">
         <p>Connected account: {address}</p>
-        <button
-          onClick={async () => {
-            await disconnectWallet();
-            setAddress(null);
-            setStatus(null);
-          }}
-        >
-          Disconnect MetaMask
-        </button>
         <button
           onClick={async () => {
             try {
@@ -190,6 +173,24 @@ function App() {
           }
         >
           Return Item
+        </button>
+        <br/>
+        <br/>
+        <br/>
+        {status != null && status.returnState == ReturnedState.Received
+          ? <a className="sec" href="/secret-data.jpg">🔑 Download Secret Data</a>
+          : null}
+        <br/>
+        <br/>
+        <br/>
+        <button
+          onClick={async () => {
+            await disconnectWallet();
+            setAddress(null);
+            setStatus(null);
+          }}
+        >
+          Disconnect MetaMask
         </button>
       </div>
     );

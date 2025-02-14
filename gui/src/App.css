@@ -40,3 +40,18 @@
 .read-the-docs {
   color: #888;
 }
+
+h1 {
+    color: gray;
+    text-shadow: 2px 2px 5px white;
+}
+
+.sec {
+    border: 1px solid;
+    border-radius: 8px;
+    padding: 1em;
+}
+
+.sec:hover {
+    color: black;
+}
