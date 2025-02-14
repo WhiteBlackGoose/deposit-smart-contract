@@ -25,6 +25,7 @@ contract Borger {
 
     mapping(address => ReturnedState) private userStates;
 
+
     Item public item;
     address public owner;
 
