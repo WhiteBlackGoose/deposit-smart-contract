@@ -2,8 +2,6 @@ import { createPublicClient, getContract, http } from "viem";
 import { hardhat } from "viem/chains";
 import { abi } from "./abi";
 
-export const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-
 export const publicClient = createPublicClient({
   chain: hardhat,
   transport: http(),
@@ -18,14 +16,21 @@ export interface Status {
 
 export async function readStatus(
   contractAddress: `0x${string}`,
-  userAdress: `0x${string}`
-): Promise<Status> {
+  userAddress: `0x${string}`
+): Promise<Status | null> {
   const contract = getContract({
     address: contractAddress,
     abi: abi,
     client: publicClient,
   });
-  const state = await contract.read.checkReturnState([userAdress]);
+  
+  let state;
+  try {
+    state = await contract.read.checkReturnState([userAddress]);
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
 
   const returnState =
     state === 0 ? ReturnedState.Returned : ReturnedState.Received;

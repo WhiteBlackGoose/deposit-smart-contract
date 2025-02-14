@@ -12,7 +12,7 @@ import {
 } from "viem";
 
 import { abi } from "./abi";
-import { contractAddress, readStatus, Status, ReturnedState } from "./config";
+import { readStatus, Status, ReturnedState } from "./config";
 
 export const wagmiClient = createConfig({
   connectors: [metaMask()],
@@ -67,11 +67,12 @@ async function calculateImageHash(file: File): Promise<string> {
 function App() {
   const [address, setAddress] = useState<`0x${string}` | null>(null);
   const [imageHash, setImageHash] = useState<String | null>(null);
+  const [contractAddress, setContractAddress] = useState<`0x${string}` | null>("0x922D6956C99E12DFeB3224DEA977D0939758A1Fe");
 
   useEffect(() => {
     tryConnectWallet().then(async (receivedAddress) => {
       setAddress(receivedAddress);
-      if (receivedAddress != null) {
+      if (receivedAddress != null && contractAddress != null) {
         setStatus(await readStatus(contractAddress, receivedAddress));
       }
     });
@@ -108,7 +109,7 @@ function App() {
     );
   }
   let state;
-  if (address) {
+  if (address && contractAddress) {
     state = (
       <div className="card">
         <p>Connected account: {address}</p>
@@ -194,7 +195,7 @@ function App() {
         </button>
       </div>
     );
-  } else {
+  } else if (contractAddress) {
     state = (
       <div className="card">
         <button
@@ -222,10 +223,31 @@ function App() {
           )}
         </div>
       ) : (
-        <p>Please connect your wallet first</p>
+        <p>Please connect your wallet first and make sure the contract address is correct</p>
       )}
       {dragdrop}
       {state}
+      <hr />
+      <footer>
+      <p>Contract Address:</p>
+      <input
+        value={contractAddress ?? ""}
+        style={{ textAlign: "center", width: "350px", padding: "4px" }}
+        onChange={async (e) => {
+          const tt = e.target.value;
+          if (tt.startsWith("0x")) {
+            const addr = tt as `0x${string}`;
+            setContractAddress(addr);
+            if (address != null) {
+              setStatus(await readStatus(addr, address));
+            }
+          } else {
+            setContractAddress(null);
+            setStatus(null);
+          }
+        }
+      } />
+      </footer>
     </>
   );
 }
