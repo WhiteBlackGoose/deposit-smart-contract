@@ -161,6 +161,7 @@ h1 {
 button {
   position: relative;
   overflow: hidden;
+  background-color: black;
   border-color: white;
   margin: 2vh;
   z-index: 2;
