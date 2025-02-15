@@ -3,10 +3,63 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  z-index: 1;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background: linear-gradient(30deg, #9cfae9 0%, #23be64 50%, #5a45a5 100%);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100vh;
+  height: 100vw;
+  z-index: -1;
+  background-image: url('../resources/giphy.gif');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: 0.5;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.second-gif {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-image: 
+    linear-gradient(to right, black, rgb(6, 6, 6)),
+    url('../resources/12063e112736829601a1ab64a375.gif'),
+    linear-gradient(to left, black, rgb(6, 6, 6));
+  background-repeat: no-repeat;
+  background-position: left, center, right;
+  background-size: 30% 100%, auto 100%, 30% 100%;
+  opacity: 0.4;
 }
 
 .logo {
-  height: 6em;
+  height: 16em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
@@ -42,16 +95,107 @@
 }
 
 h1 {
-    color: gray;
-    text-shadow: 2px 2px 5px white;
+    color: rgb(254, 254, 254);
+    text-shadow: 5px 5px 8px rgb(0, 0, 0);
 }
 
 .sec {
-    border: 1px solid;
-    border-radius: 8px;
-    padding: 1em;
+  border: 2px solid white;
+  border-radius: 8px;
+  padding: 1em;
+  box-shadow: 3px 3px 5px black;
+  background: linear-gradient(
+    to top right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.66) 100%
+  );
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .sec:hover {
-    color: black;
+  color: black;
+  background: linear-gradient(
+    to top right,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.8) 100%
+  );
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.sec::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(66deg);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {
+      top: -50%;
+      left: -50%;
+  }
+  100% {
+      top: 150%;
+      left: 150%;
+  }
+}
+
+button {
+  position: relative;
+  overflow: hidden;
+  border-color: white;
+  margin: 2vh;
+  z-index: 2;
+  box-shadow: 3px 3px 5px black;
+  transition: transform 3s ease;
+}
+
+button:hover{
+  transform: scale(1.2);
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.66 ) 100%
+  );
+  transform: rotate(66deg);
+  animation: shine 4s infinite;
+}
+
+@keyframes shine {
+  0% {
+    top: -50%;
+    left: -66%;
+  }
+  100% {
+    top: 150%;
+    left: 150%;
+  }
 }

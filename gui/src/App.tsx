@@ -67,7 +67,7 @@ async function calculateImageHash(file: File): Promise<string> {
 function App() {
   const [address, setAddress] = useState<`0x${string}` | null>(null);
   const [imageHash, setImageHash] = useState<String | null>(null);
-  const [contractAddress, setContractAddress] = useState<`0x${string}` | null>("0x922D6956C99E12DFeB3224DEA977D0939758A1Fe");
+  const [contractAddress, setContractAddress] = useState<`0x${string}` | null>("0x5FbDB2315678afecb367f032d93F642f64180aa3");
 
   useEffect(() => {
     tryConnectWallet().then(async (receivedAddress) => {
@@ -177,11 +177,10 @@ function App() {
         </button>
         <br/>
         <br/>
-        <br/>
+        
         {status != null && status.returnState == ReturnedState.Received
           ? <a className="sec" href="/secret-data.jpg">🔑 Download Secret Data</a>
           : null}
-        <br/>
         <br/>
         <br/>
         <button
@@ -213,7 +212,7 @@ function App() {
 
   return (
     <>
-      <h1>Borrowing System</h1>
+      <h1>Borrowing System</h1><br/><br/><br/><br/>
       {status ? (
         <div className="card">
           {status.returnState == ReturnedState.Returned ? (
