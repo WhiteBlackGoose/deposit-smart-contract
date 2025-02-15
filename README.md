@@ -1,13 +1,40 @@
-# Sample Hardhat Project
+# Borrowing System
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+![Deployment](https://img.shields.io/github/actions/workflow/status/WhiteBlackGoose/deposit-smart-contract/deploy.yml?label=deploy)
+![Tests](https://img.shields.io/github/actions/workflow/status/WhiteBlackGoose/deposit-smart-contract/tests.yml?label=tests)
 
-Try running some of the following tasks:
+That's a smart contract PoC on hardhat.
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
+## Run node locally
 ```
+cd contract
+npx hardhat node
+```
+
+## Add account to MetaMask
+
+1. Open MetaMask
+1. Click on the network dropdown
+    1. URL: `http://localhost:8545`
+    1. Chain ID: `31337`
+    1. Currency Symbol: `ETH`
+1. Click on the account icon
+1. Click on `Import Account`
+1. Paste the private key from the terminal where you started the node
+
+## Deploy contract locally
+```
+cd contract
+npx hardhat ignition deploy --reset ./ignition/modules/deploy.ts --network localhost
+```
+
+## Interact with the app
+
+Either start the frontend locally:
+```
+cd gui
+npm run dev
+```
+or go [Live App](https://borger.wbg.gg).
+
+Connect your wallet and paste the ID of your smart contract in the field at the bottom.
