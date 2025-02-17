@@ -45,7 +45,7 @@ describe("Borger", function () {
     it("Should not allow borrowing with incorrect deposit", async function () {
       const { borger, borrower } = await loadFixture(deployBorgerFixture);
       await expect(borger.connect(borrower).borrowItem({ value: ethers.parseEther("20") }))
-        .to.be.revertedWith("Deposit does not match requirements.");
+        .to.be.revertedWith("Invalid deposit amount");
     });
 
     it("Should not allow borrowing twice", async function () {
@@ -73,15 +73,6 @@ describe("Borger", function () {
       const { borger, borrower } = await loadFixture(deployBorgerFixture);
       await expect(borger.connect(borrower).returnItem("0xdd76cf5210b29098297dbb17b8ece744ef72c154f55cc0d1a4db0749932293ef"))
         .to.be.revertedWith("Item available");
-    });
-
-    it("Should correctly track the return state", async function () {
-      const { borger, borrower } = await loadFixture(deployBorgerFixture);
-      expect(await borger.checkReturnState(borrower.getAddress())).to.equal(0);
-      await borger.connect(borrower).borrowItem({ value: ethers.parseEther("21") });
-      expect(await borger.checkReturnState(borrower.getAddress())).to.equal(1);
-      await borger.connect(borrower).returnItem("0xdd76cf5210b29098297dbb17b8ece744ef72c154f55cc0d1a4db0749932293ef");
-      expect(await borger.checkReturnState(borrower.getAddress())).to.equal(0);
     });
     
     it("Should refund the correct deposit when item is returned", async function () {

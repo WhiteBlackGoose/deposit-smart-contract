@@ -25,7 +25,6 @@ contract Borger {
 
     mapping(address => ReturnedState) private userStates;
 
-
     Item public item;
     address public owner;
 
@@ -36,20 +35,15 @@ contract Borger {
         owner = msg.sender;
     }
 
-    function checkReturnState(address user) view public returns (ReturnedState){
-            return (userStates[user]);
-    }
-
     function borrowItem() public payable {
-        require(checkReturnState(msg.sender) == ReturnedState.Returned, "Item already borrowed");
-        require(msg.value == item.deposit, "Deposit does not match requirements.");
-        require(address(this).balance >= msg.value, "Contract doesn't have enough balance");
+        ReturnedState userState = userStates[msg.sender];
+        require(userState == ReturnedState.Returned, "Item already borrowed");
+        require(msg.value == item.deposit, "Invalid deposit amount");
         userStates[msg.sender] = ReturnedState.Received;
     }
 
-
     function returnItem(bytes32 _hash) public noReentrant{
-        require(checkReturnState(msg.sender) == ReturnedState.Received, "Item available");
+        require(userStates[msg.sender] == ReturnedState.Received, "Item available");
         require(_hash == item.sha256hash, "Hash doesn't match");
         userStates[msg.sender] = ReturnedState.Returned;
         payable(msg.sender).transfer(item.deposit);
